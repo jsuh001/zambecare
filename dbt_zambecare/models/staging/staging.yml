@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_valid_patient
+    description: Validated patient records with direct identifiers excluded from analytics.
+    columns:
+      - name: source_patient_id
+        data_tests: [not_null]
+      - name: source_system
+        data_tests: [not_null]
+  - name: stg_valid_encounter
+    description: Validated encounters ready for dimensional transformation.
+    columns:
+      - name: source_encounter_id
+        data_tests: [not_null]
+      - name: source_patient_id
+        data_tests: [not_null]

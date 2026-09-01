@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: recon_encounter_batch
+    description: Batch-level proof that every encounter was loaded or explicitly rejected.
+    columns:
+      - name: batch_id
+        data_tests: [unique, not_null]
+      - name: reconciliation_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PASS']

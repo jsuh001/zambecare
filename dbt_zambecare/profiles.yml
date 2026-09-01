@@ -1,0 +1,13 @@
+zambecare_oracle:
+  target: dev
+  outputs:
+    dev:
+      type: oracle
+      user: "{{ env_var('ORACLE_DBT_USER') }}"
+      password: "{{ env_var('ORACLE_DBT_PASSWORD') }}"
+      protocol: tcp
+      host: "{{ env_var('ORACLE_HOST', 'localhost') }}"
+      port: "{{ env_var('ORACLE_PORT', '1521') | int }}"
+      service: "{{ env_var('ORACLE_SERVICE', 'FREEPDB1') }}"
+      schema: ZC_DBT
+      threads: 2

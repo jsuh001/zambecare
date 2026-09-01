@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: zc_stage
+    schema: ZC_STAGE
+    description: Raw synthetic healthcare records loaded from source systems.
+    tables:
+      - name: stg_patient
+        description: Patient records awaiting or completing validation.
+        columns:
+          - name: batch_id
+            data_tests: [not_null]
+          - name: source_record_id
+            data_tests: [not_null]
+      - name: stg_encounter
+        description: Encounter records awaiting or completing validation.
+  - name: zc_audit
+    schema: ZC_AUDIT
+    tables:
+      - name: rejected_record
+      - name: etl_batch

@@ -1,0 +1,25 @@
+name: zambecare
+version: 0.1.0
+config-version: 2
+
+profile: zambecare_oracle
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+target-path: target
+clean-targets: [target, dbt_packages]
+
+models:
+  zambecare:
+    staging:
+      +materialized: view
+      +tags: [staging]
+    marts:
+      +materialized: table
+      +tags: [warehouse]
+    reconciliation:
+      +materialized: view
+      +tags: [reconciliation]

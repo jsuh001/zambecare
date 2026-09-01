@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fact_encounter
+    description: Incremental analytical encounter fact built from validated staging records.
+    columns:
+      - name: batch_id
+        data_tests: [not_null]
+      - name: source_encounter_id
+        data_tests: [not_null]
+      - name: source_patient_id
+        data_tests: [not_null]
+      - name: encounter_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PLANNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED']
