@@ -6,14 +6,17 @@ Architecture, repository, local containers, initial schemas, dbt structure, CI/C
 
 ## Phase 2 — Secure transactional API
 
+Status: implemented 2026-09-02.
+
 - Alembic migrations
 - Patient registration and sign-in
 - Argon2 password hashing
 - JWT access/refresh rotation
-- Patient, doctor, nurse, administrator roles
+- Patient, doctor, nurse, and administrator role foundation
 - Authorization tests
 - Provider and facility APIs
-- Synthetic data generator
+- React patient portal
+- Synthetic provider/facility data
 
 ## Phase 3 — Healthcare ingestion
 

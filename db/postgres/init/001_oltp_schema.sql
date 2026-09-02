@@ -15,9 +15,11 @@ CREATE TABLE IF NOT EXISTS clinical.patient (
     is_active           BOOLEAN NOT NULL DEFAULT TRUE
 );
 
+-- Phase 2 links this table to security.user_account through an Alembic migration.
+
 CREATE TABLE IF NOT EXISTS clinical.facility (
     facility_id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    facility_name       VARCHAR(200) NOT NULL,
+    facility_name       VARCHAR(200) NOT NULL CONSTRAINT uq_facility_name UNIQUE,
     facility_type       VARCHAR(50) NOT NULL,
     address_line_1      VARCHAR(200) NOT NULL,
     city                VARCHAR(100) NOT NULL,

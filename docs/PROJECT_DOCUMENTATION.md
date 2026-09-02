@@ -217,3 +217,7 @@ The repository will ultimately contain:
 ## 19. Definition of done
 
 A phase is complete only when code, tests, documentation, security considerations, operational instructions, and interview talking points agree with one another.
+
+## 20. Phase 2 implementation record
+
+Phase 2 implemented the transactional application boundary using Python/FastAPI, PostgreSQL, Alembic, Argon2, JWT sessions, explicit roles, audit events, and a React patient portal. The application and analytical Oracle environments remain deliberately separated. PostgreSQL owns immediate patient-facing transactions; later pipelines will move minimized, validated data into Oracle for analytics.

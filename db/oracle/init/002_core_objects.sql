@@ -1,4 +1,8 @@
--- Connect as ZC_STAGE before running the staging section.
+WHENEVER SQLERROR EXIT SQL.SQLCODE;
+ALTER SESSION SET CONTAINER = FREEPDB1;
+ALTER SESSION SET CURRENT_SCHEMA = ZC_STAGE;
+
+-- ZC_STAGE objects.
 CREATE TABLE stg_patient (
     batch_id             NUMBER(18) NOT NULL,
     source_record_id     VARCHAR2(100) NOT NULL,
@@ -31,7 +35,9 @@ CREATE TABLE stg_encounter (
     CONSTRAINT pk_stg_encounter PRIMARY KEY (batch_id, source_record_id)
 );
 
--- Connect as ZC_AUDIT before running the audit section.
+ALTER SESSION SET CURRENT_SCHEMA = ZC_AUDIT;
+
+-- ZC_AUDIT objects.
 CREATE TABLE etl_batch (
     batch_id             NUMBER(18) PRIMARY KEY,
     source_system        VARCHAR2(50) NOT NULL,
@@ -70,7 +76,9 @@ CREATE TABLE reconciliation_result (
     CONSTRAINT ck_recon_status CHECK (reconciliation_status IN ('PASS', 'FAIL'))
 );
 
--- Connect as ZC_DW before running the warehouse section.
+ALTER SESSION SET CURRENT_SCHEMA = ZC_DW;
+
+-- ZC_DW objects.
 CREATE TABLE dim_patient (
     patient_key          NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     source_patient_id    VARCHAR2(100) NOT NULL,

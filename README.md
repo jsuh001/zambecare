@@ -4,11 +4,17 @@ ZambeCare is a low-cost healthcare data engineering and DevOps portfolio project
 
 > **Portfolio safety boundary:** This repository is for education and uses synthetic data only. It is designed to demonstrate HIPAA-aligned safeguards; it is not a certified production healthcare system and must not store real PHI.
 
-## Phase 1 status
+## Current status — Phase 2
 
-Phase 1 establishes the project foundation:
+Phase 1 established the platform foundation. Phase 2 adds:
 
-- FastAPI service skeleton and health endpoint
+- Secure Python/FastAPI application APIs
+- Patient registration, login, profile, and logout
+- Argon2 password hashing and rotating JWT sessions
+- Role-based authorization and audit events
+- Doctor and healthcare facility search
+- Alembic database migrations
+- React patient portal and dashboard
 - PostgreSQL transactional database
 - Oracle AI Database Free analytics target (optional Docker profile)
 - Initial Oracle staging, warehouse, and audit schemas
@@ -17,7 +23,13 @@ Phase 1 establishes the project foundation:
 - Jenkins deployment pipeline skeleton
 - Detailed architecture, security, data-model, and roadmap documentation
 
-See [docs/PHASE_1.md](docs/PHASE_1.md) for acceptance criteria and [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md) for the full living design.
+See [docs/PHASE_2.md](docs/PHASE_2.md) for acceptance criteria and [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md) for the full living design.
+
+Implementation instructions:
+
+- [Local Phase 1 implementation](docs/PHASE_1_IMPLEMENTATION.md)
+- [Optional AWS EC2 implementation](docs/AWS_EC2_IMPLEMENTATION.md)
+- [Phase 2 implementation and testing](docs/PHASE_2_IMPLEMENTATION.md)
 
 ## Architecture
 
@@ -54,7 +66,7 @@ flowchart LR
 3. Start the lightweight core services:
 
    ```bash
-   docker compose up --build -d postgres api
+   docker compose up --build -d postgres api frontend
    ```
 
 4. Check the API:
@@ -63,7 +75,7 @@ flowchart LR
    curl http://localhost:8000/health
    ```
 
-5. Open API documentation at `http://localhost:8000/docs`.
+5. Open the patient portal at `http://localhost:3000` and API documentation at `http://localhost:8000/docs`.
 
 ## Optional Oracle profile
 
@@ -82,6 +94,7 @@ The scripts under `db/oracle/init` are intentionally applied manually in numbere
 ```text
 zambecare/
 ├── api/                  FastAPI service
+├── frontend/             React patient portal
 ├── db/                   PostgreSQL and Oracle database scripts
 ├── dbt_zambecare/        dbt transformations, tests, and reconciliation
 ├── docs/                 Living project documentation
@@ -107,8 +120,8 @@ make dbt-docs       # Generate dbt documentation
 
 | Phase | Focus |
 |---|---|
-| 1 | Foundation, architecture, schemas, Docker, documentation |
-| 2 | Patient authentication and transactional healthcare APIs |
+| 1 | Foundation, architecture, schemas, Docker, documentation and implementation guides |
+| 2 | Secure application APIs and React patient portal — complete |
 | 3 | Synthetic FHIR/CSV ingestion and Oracle staging pipeline |
 | 4 | PL/SQL validation, batch control, restartability |
 | 5 | dbt dimensional models, reconciliation, and documentation |

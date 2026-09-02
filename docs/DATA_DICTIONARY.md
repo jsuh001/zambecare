@@ -14,6 +14,18 @@ This dictionary describes the initial foundation. It will expand with every migr
 | `clinical.vital_sign` | `vital_sign_id` | Encounter observation or measurement | Clinical PHI |
 | `security.phi_access_audit` | `audit_id` | Metadata about sensitive-record access | Security-sensitive; no clinical payload |
 
+## Phase 2 identity and security entities
+
+| Entity | Primary key | Purpose | Sensitive fields |
+|---|---|---|---|
+| `security.user_account` | `user_id` | Login identity, account state, and lockout metadata | Email, password hash |
+| `security.role` | `role_id` | Authorized application role definition | Internal authorization data |
+| `security.user_role` | `user_role_id` | Account-to-role assignment | Authorization data |
+| `security.refresh_session` | `refresh_session_id` | Revocable and rotating browser session | Token fingerprint, expiration |
+| `security.audit_event` | `audit_event_id` | Application security and access evidence | Actor/resource metadata; no payload |
+
+Phase 2 adds `clinical.patient.user_id` to associate one patient profile with one login account and `preferred_language` for an editable patient preference.
+
 ## Oracle staging entities
 
 | Entity | Grain | Purpose |

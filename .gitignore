@@ -16,4 +16,9 @@ dbt_zambecare/.user.yml
 *.key
 *.p12
 *.zip
+secrets/
+*.sso
+*.jks
 .DS_Store
+frontend/node_modules/
+frontend/dist/

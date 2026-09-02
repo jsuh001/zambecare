@@ -71,3 +71,17 @@ Logs must not contain:
 - Run authorization and API security tests.
 - Verify audit events cannot be modified by application roles.
 - Verify no PHI-like values appear in logs.
+
+## Phase 2 implemented controls
+
+- Argon2 password hashing
+- Generic invalid-credential responses and dummy unknown-user password verification
+- Temporary lockout after repeated password failures
+- Short-lived signed access tokens
+- Fingerprinted, rotating, revocable refresh sessions
+- Patient self-access derived from authenticated identity
+- Explicit role checks for directory administration
+- Application audit events for registration, login, profile access, and changes
+- Explicit CORS origin configuration
+
+The React demonstration currently keeps its session in browser `sessionStorage`. This is acceptable only for the synthetic portfolio environment. A production design requires a dedicated browser-session threat assessment and would normally use secure, HTTP-only, same-site cookies with CSRF defenses.
