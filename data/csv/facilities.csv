@@ -1,0 +1,5 @@
+facility_id,facility_name,facility_type,address_line_1,city,state_code,postal_code,latitude,longitude
+fac-north-001,North Willow Community Clinic,PRIMARY_CARE,1840 Willow Bend Road,Plano,TX,75074,33.019843,-96.698886
+fac-lake-002,Lakehaven Medical Pavilion,URGENT_CARE,720 Harbor Point Avenue,Garland,TX,75040,32.912624,-96.638884
+fac-oak-003,Oak Meridian Specialty Center,SPECIALTY,315 Meridian Parkway,Irving,TX,75039,32.894201,-96.948894
+

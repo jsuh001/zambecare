@@ -32,6 +32,10 @@ Phase 2 adds `clinical.patient.user_id` to associate one patient profile with on
 |---|---|---|
 | `ZC_STAGE.STG_PATIENT` | One source patient per batch | Raw/source-aligned patient load and validation state |
 | `ZC_STAGE.STG_ENCOUNTER` | One source encounter per batch | Raw/source-aligned encounter load and validation state |
+| `ZC_STAGE.STG_PRACTITIONER` | One source practitioner per batch | Provider identity and specialty staging |
+| `ZC_STAGE.STG_FACILITY` | One source organization/facility per batch | Care-location staging; never patient demographics |
+| `ZC_STAGE.STG_CONDITION` | One source condition per batch | Diagnosis/condition code staging |
+| `ZC_STAGE.STG_OBSERVATION` | One source measurement per batch | Vital-sign and clinical measurement staging |
 
 ## Oracle audit entities
 
@@ -40,6 +44,7 @@ Phase 2 adds `clinical.patient.user_id` to associate one patient profile with on
 | `ZC_AUDIT.ETL_BATCH` | One entity extraction batch | Lifecycle, counts, and operational state |
 | `ZC_AUDIT.REJECTED_RECORD` | One failed rule per source record | Explainable data-quality rejection |
 | `ZC_AUDIT.RECONCILIATION_RESULT` | One entity reconciliation per batch | Source-to-target accounting result |
+| `ZC_AUDIT.EXTRACTION_WATERMARK` | One source/entity checkpoint | Last successfully committed extraction boundary |
 
 ## Oracle analytical entities
 

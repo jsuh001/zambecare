@@ -85,6 +85,53 @@ services:
       - ./dbt_zambecare:/usr/app
     networks: [zambecare]
 
+  ingestion:
+    build: ./ingestion
+    profiles: ["ingestion"]
+    environment:
+      INGEST_POSTGRES_URL: postgresql://${POSTGRES_USER:-zambecare_app}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-zambecare}
+      ORACLE_INGEST_USER: ${ORACLE_INGEST_USER:-ZC_INGEST}
+      ORACLE_INGEST_PASSWORD: ${ORACLE_INGEST_PASSWORD:?Set ORACLE_INGEST_PASSWORD in .env}
+      ORACLE_DSN: ${ORACLE_DSN:-dataprd_low}
+      ORACLE_WALLET_DIR: /opt/oracle/wallet
+      ORACLE_WALLET_PASSWORD: ${ORACLE_WALLET_PASSWORD:?Set ORACLE_WALLET_PASSWORD in .env}
+      CODE_VERSION: ${CODE_VERSION:-phase3-local}
+    volumes:
+      - ./secrets/oracle_wallet:/opt/oracle/wallet:ro
+      - ./data:/opt/zambecare/data:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [zambecare]
+
+  airflow:
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    profiles: ["airflow"]
+    command: standalone
+    environment:
+      AIRFLOW_HOME: /opt/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      INGEST_POSTGRES_URL: postgresql://${POSTGRES_USER:-zambecare_app}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-zambecare}
+      ORACLE_INGEST_USER: ${ORACLE_INGEST_USER:-ZC_INGEST}
+      ORACLE_INGEST_PASSWORD: ${ORACLE_INGEST_PASSWORD:?Set ORACLE_INGEST_PASSWORD in .env}
+      ORACLE_DSN: ${ORACLE_DSN:-dataprd_low}
+      ORACLE_WALLET_DIR: /opt/oracle/wallet
+      ORACLE_WALLET_PASSWORD: ${ORACLE_WALLET_PASSWORD:?Set ORACLE_WALLET_PASSWORD in .env}
+      CODE_VERSION: ${CODE_VERSION:-phase3-airflow}
+    ports:
+      - "${AIRFLOW_PORT:-8080}:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags:ro
+      - ./secrets/oracle_wallet:/opt/oracle/wallet:ro
+      - ./data:/opt/zambecare/data:ro
+      - airflow_data:/opt/airflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [zambecare]
+
 networks:
   zambecare:
     driver: bridge
@@ -92,3 +139,4 @@ networks:
 volumes:
   postgres_data:
   oracle_data:
+  airflow_data:

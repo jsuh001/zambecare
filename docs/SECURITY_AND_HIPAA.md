@@ -56,6 +56,12 @@ Logs must not contain:
 | Credentials committed to Git | `.env` ignored; example placeholders; CI pattern check |
 | Excessive warehouse access | Separate Oracle schemas and object grants |
 | PHI copied into analytics | Direct identifiers omitted from initial dbt staging model |
+| Wallet disclosure | Wallet directory is Git-ignored and mounted read-only |
+| Privileged runtime access | `ADMIN` provisions only; ingestion uses restricted `ZC_INGEST` |
+| Untraceable ingestion | Batch ID, checksum, watermark, rejection, and reconciliation evidence |
+
+Phase 3 fixtures are synthetic. Real-person data, copied production records, and external AI
+processing of PHI are prohibited. The `.test` email domain is used to prevent delivery.
 | Unexplained data loss | Batch reconciliation and rejected-record accounting |
 | AI presented as diagnosis | Explicit decision-support boundary and emergency-first rules |
 | Resource exhaustion | Optional profiles for large local services |
