@@ -1,0 +1,7 @@
+oracledb>=3.0,<4
+psycopg[binary]>=3.2,<4
+pydantic>=2.10,<3
+pydantic-settings>=2.7,<3
+pytest>=8.3,<9
+ruff>=0.9,<1
+

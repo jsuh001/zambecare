@@ -20,6 +20,8 @@ Status: implemented 2026-09-02.
 
 ## Phase 3 — Healthcare ingestion
 
+Status: implemented 2026-09-02; live DATAPRD execution is a manual acceptance checkpoint.
+
 - FHIR Patient, Practitioner, Organization, Encounter, Condition, Observation
 - Facility CSV ingestion
 - Extraction watermarks

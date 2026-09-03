@@ -4,9 +4,10 @@ ZambeCare is a low-cost healthcare data engineering and DevOps portfolio project
 
 > **Portfolio safety boundary:** This repository is for education and uses synthetic data only. It is designed to demonstrate HIPAA-aligned safeguards; it is not a certified production healthcare system and must not store real PHI.
 
-## Current status — Phase 2
+## Current status — Phase 3
 
-Phase 1 established the platform foundation. Phase 2 adds:
+Phase 1 established the platform foundation, Phase 2 added the secure application, and
+Phase 3 adds the healthcare ingestion layer:
 
 - Secure Python/FastAPI application APIs
 - Patient registration, login, profile, and logout
@@ -19,17 +20,22 @@ Phase 1 established the platform foundation. Phase 2 adds:
 - Oracle AI Database Free analytics target (optional Docker profile)
 - Initial Oracle staging, warehouse, and audit schemas
 - dbt Core project for transformations, tests, and reconciliation
+- Python ingestion for PostgreSQL, FHIR JSON, and facility CSV
+- Oracle Autonomous Database mTLS support and optional Airflow orchestration
 - GitHub Actions continuous integration
 - Jenkins deployment pipeline skeleton
 - Detailed architecture, security, data-model, and roadmap documentation
 
-See [docs/PHASE_2.md](docs/PHASE_2.md) for acceptance criteria and [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md) for the full living design.
+See [docs/PHASE_3.md](docs/PHASE_3.md) for acceptance criteria and [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md) for the full living design.
 
 Implementation instructions:
 
 - [Local Phase 1 implementation](docs/PHASE_1_IMPLEMENTATION.md)
 - [Optional AWS EC2 implementation](docs/AWS_EC2_IMPLEMENTATION.md)
 - [Phase 2 implementation and testing](docs/PHASE_2_IMPLEMENTATION.md)
+- [Phase 3 manual implementation](docs/PHASE_3_IMPLEMENTATION.md)
+- [Phase 3 operations runbook](docs/PHASE_3_RUNBOOK.md)
+- [FHIR/source mappings](docs/FHIR_MAPPING.md)
 
 ## Architecture
 
@@ -89,6 +95,9 @@ docker compose --profile oracle up -d oracle
 Oracle Container Registry terms may require one-time acceptance. The default service name is `FREEPDB1`.
 The scripts under `db/oracle/init` are intentionally applied manually in numbered order during the Oracle setup exercise; they contain obvious placeholder passwords and are not auto-executed by Compose.
 
+For Oracle Autonomous Database, use the mTLS wallet workflow and scripts under
+`db/oracle/cloud/`; see the Phase 3 manual. Wallet files are never committed.
+
 ## Repository layout
 
 ```text
@@ -97,6 +106,9 @@ zambecare/
 ├── frontend/             React patient portal
 ├── db/                   PostgreSQL and Oracle database scripts
 ├── dbt_zambecare/        dbt transformations, tests, and reconciliation
+├── ingestion/            Phase 3 Python healthcare ingestion package
+├── airflow/              Optional manually triggered orchestration DAG
+├── data/                 Fictional FHIR and CSV training fixtures
 ├── docs/                 Living project documentation
 ├── scripts/              Developer and validation utilities
 ├── .github/workflows/    GitHub Actions CI
@@ -114,6 +126,9 @@ make down           # Stop services
 make dbt-debug      # Verify dbt-to-Oracle connectivity
 make dbt-build      # Build and test dbt models
 make dbt-docs       # Generate dbt documentation
+make validate-phase3 # Validate Phase 3 repository contracts
+make ingestion-validate-fhir # Validate synthetic FHIR without loading
+make airflow-up      # Start optional Airflow learning profile
 ```
 
 ## Delivery roadmap
@@ -122,7 +137,7 @@ make dbt-docs       # Generate dbt documentation
 |---|---|
 | 1 | Foundation, architecture, schemas, Docker, documentation and implementation guides |
 | 2 | Secure application APIs and React patient portal — complete |
-| 3 | Synthetic FHIR/CSV ingestion and Oracle staging pipeline |
+| 3 | Synthetic FHIR/CSV ingestion and Oracle staging pipeline — implemented; live acceptance is manual |
 | 4 | PL/SQL validation, batch control, restartability |
 | 5 | dbt dimensional models, reconciliation, and documentation |
 | 6 | AI-assisted symptom routing with medical safety rules |

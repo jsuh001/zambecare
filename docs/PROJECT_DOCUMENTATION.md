@@ -221,3 +221,9 @@ A phase is complete only when code, tests, documentation, security consideration
 ## 20. Phase 2 implementation record
 
 Phase 2 implemented the transactional application boundary using Python/FastAPI, PostgreSQL, Alembic, Argon2, JWT sessions, explicit roles, audit events, and a React patient portal. The application and analytical Oracle environments remain deliberately separated. PostgreSQL owns immediate patient-facing transactions; later pipelines will move minimized, validated data into Oracle for analytics.
+
+Phase 3 implements that controlled movement using a separate Python package. PostgreSQL
+patients, synthetic FHIR resources, and facility CSV rows are contract-validated and loaded
+into entity-specific Oracle Autonomous Database staging tables. Batch state, watermarks,
+rejections, checksums, and reconciliation results are stored under `ZC_AUDIT`. Airflow is an
+optional manual orchestration profile; command-line runs remain the lightweight default.

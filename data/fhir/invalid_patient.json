@@ -1,0 +1,7 @@
+{
+  "resourceType": "Patient",
+  "id": "pt-invalid-training",
+  "gender": "unknown",
+  "telecom": [{"system": "email", "value": "invalid.patient@example.test"}]
+}
+

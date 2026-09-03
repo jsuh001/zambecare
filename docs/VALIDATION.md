@@ -30,3 +30,10 @@ Docker was not installed in the build workspace, so container startup, live Post
 7. `dbt debug` followed by `dbt build` when beginning analytical work.
 
 No claim is made that the Oracle DDL has run until those integration checks pass against the selected Oracle Free image.
+
+## Phase 3 validation
+
+Phase 3 adds `scripts/validate_phase3.sh`, ingestion unit tests, FHIR/CSV validation-only
+runs, Oracle script `005_validate_phase3.sql`, and rollback-only smoke script
+`006_smoke_test.sql`. CI does not receive an Oracle wallet. Live mTLS and database writes are
+manual acceptance tests against DATAPRD using synthetic data.
