@@ -68,11 +68,11 @@ class OracleLoader:
     def _insert_valid(cursor: oracledb.Cursor, batch_id: int, record: PreparedRecord) -> None:
         table, columns = TABLE_COLUMNS[record.entity]
         fixed = ["batch_id", "source_system", "source_record_id"]
-        trailing = ["raw_resource", "record_checksum", "validation_status"]
+        trailing = ["raw_payload", "record_hash", "validation_status"]
         all_columns = fixed + columns + trailing
         binds: dict[str, Any] = {"batch_id": batch_id, "source_system": record.source_system,
-            "source_record_id": record.source_record_id, "raw_resource": record.raw_json,
-            "record_checksum": record.record_checksum, "validation_status": "VALID"}
+            "source_record_id": record.source_record_id, "raw_payload": record.raw_json,
+            "record_hash": record.record_hash, "validation_status": "VALID"}
         binds.update({column: record.values.get(column) for column in columns})
         placeholders = ", ".join(f":{column}" for column in all_columns)
         cursor.execute(
@@ -84,12 +84,12 @@ class OracleLoader:
         cursor.execute(
             """INSERT INTO zc_audit.rejected_record
                (batch_id, source_entity, source_record_id, rule_code,
-                rejection_reason, raw_payload, record_checksum)
+                rejection_reason, raw_payload, record_hash)
                VALUES (:batch_id, :entity, :source_id, :rule_code,
-                       :reason, :payload, :checksum)""",
+                       :reason, :payload, :record_hash)""",
             batch_id=batch_id, entity=record.entity, source_id=record.source_record_id,
             rule_code=record.errors[0].split(":", 1)[0], reason="; ".join(record.errors),
-            payload=record.raw_json, checksum=record.record_checksum,
+            payload=record.raw_json, record_hash=record.record_hash,
         )
 
     def load_batch(self, records: list[PreparedRecord], source: str, entity: str,

@@ -141,10 +141,10 @@ Then verify that the records are in the patient staging table:
 
 ```sql
 SELECT batch_id, source_system, source_record_id, first_name, last_name,
-       date_of_birth, validation_status, loaded_at
+       date_of_birth, validation_status, staged_at
 FROM zc_stage.stg_patient
 WHERE source_system = 'POSTGRES'
-ORDER BY loaded_at DESC;
+ORDER BY staged_at DESC;
 ```
 
 Do not query or screenshot password hashes. Use only fictional patients.

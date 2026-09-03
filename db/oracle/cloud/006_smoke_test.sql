@@ -10,7 +10,7 @@ RETURNING batch_id INTO :smoke_batch;
 
 INSERT INTO zc_stage.stg_patient
   (batch_id, source_system, source_record_id, external_patient_id, first_name, last_name,
-   date_of_birth, sex_at_birth, email, raw_resource, record_checksum, validation_status)
+   date_of_birth, sex_at_birth, email, raw_payload, record_hash, validation_status)
 VALUES
   (:smoke_batch, 'PHASE3_SMOKE', 'patient-smoke-001', 'patient-smoke-001',
    'Amina', 'Cole', DATE '1992-04-16', 'female', 'amina.cole@example.test',

@@ -42,7 +42,7 @@ CREATE TABLE zc_audit.rejected_record (
     rule_code VARCHAR2(100) NOT NULL,
     rejection_reason VARCHAR2(2000) NOT NULL,
     raw_payload CLOB,
-    record_checksum VARCHAR2(64),
+    record_hash VARCHAR2(64),
     rejected_at TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP NOT NULL,
     CONSTRAINT pk_rejected_record PRIMARY KEY (rejection_id),
     CONSTRAINT fk_rejected_batch FOREIGN KEY (batch_id)

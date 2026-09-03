@@ -85,7 +85,7 @@ The first supported FHIR R4-shaped resources will be:
 - Condition
 - Observation
 
-Mappings will retain source identifiers, source system, ingestion timestamp, and raw-resource checksum. Observations will initially cover common vital signs. OMOP-inspired analytical mappings will be added for Person, Care Site, Provider, Visit Occurrence, Condition Occurrence, and Measurement.
+Mappings will retain source identifiers, source system, ingestion timestamp, raw payload, and record hash. Observations will initially cover common vital signs. OMOP-inspired analytical mappings will be added for Person, Care Site, Provider, Visit Occurrence, Condition Occurrence, and Measurement.
 
 ## 8. AI safety design
 
@@ -225,5 +225,5 @@ Phase 2 implemented the transactional application boundary using Python/FastAPI,
 Phase 3 implements that controlled movement using a separate Python package. PostgreSQL
 patients, synthetic FHIR resources, and facility CSV rows are contract-validated and loaded
 into entity-specific Oracle Autonomous Database staging tables. Batch state, watermarks,
-rejections, checksums, and reconciliation results are stored under `ZC_AUDIT`. Airflow is an
+rejections, record hashes, and reconciliation results are stored under `ZC_AUDIT`. Airflow is an
 optional manual orchestration profile; command-line runs remain the lightweight default.

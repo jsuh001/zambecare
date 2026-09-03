@@ -12,8 +12,8 @@
 | Observation | subject, encounter, LOINC-shaped code, value, UCUM-shaped unit | `ZC_STAGE.STG_OBSERVATION` |
 
 FHIR references such as `Patient/pt-7a241` are normalized to the source identifier
-`pt-7a241`. Original resources are retained as JSON for lineage. A SHA-256 checksum is
-calculated from canonical JSON.
+`pt-7a241`. Original resources are retained as JSON in `raw_payload` for lineage. A SHA-256
+`record_hash` is calculated from canonical JSON.
 
 ## PostgreSQL patient
 

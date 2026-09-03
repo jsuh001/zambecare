@@ -34,7 +34,7 @@ class PreparedRecord:
         return not self.errors
 
     @property
-    def record_checksum(self) -> str:
+    def record_hash(self) -> str:
         return checksum(self.raw)
 
     @property
